@@ -9,10 +9,11 @@ type Props = {};
 const Books = (props: Props) => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
   const { data, isLoading, refetch } = useGetAllBooksQuery({
     searchTerm: searchValue,
     genre: selectedGenre,
-    publicationYear: undefined,
+    year: selectedYear,
   });
 
   if (isLoading) return <h2>Loading. .. ...</h2>;
@@ -24,6 +25,7 @@ const Books = (props: Props) => {
           type="text"
           name="searchValue"
           id=""
+          placeholder='Search'
           value={searchValue}
           onChange={(e) => {
             setSearchValue(e.target.value);
@@ -41,6 +43,16 @@ const Books = (props: Props) => {
             </option>
           ))}
         </select>
+        <input
+          type="text"
+          name="searchValue"
+          id=""
+          placeholder='Year'
+          value={selectedYear}
+          onChange={(e) => {
+            setSelectedYear(e.target.value);
+          }}
+        />
         <button type="button" onClick={refetch}>
           Search
         </button>
