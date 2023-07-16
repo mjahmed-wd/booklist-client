@@ -7,6 +7,7 @@ import AddBooks from '@/pages/Books/AddBooks';
 import config from '@/config';
 import Books from '@/pages/Books';
 import BookDetails from '@/pages/Books/BookDetails';
+import BookEdit from '@/pages/Books/BookEdit';
 
 const routes = createBrowserRouter([
   {
@@ -21,6 +22,14 @@ const routes = createBrowserRouter([
   {
     path: `${config.routes.books.index}/:id`,
     element: <BookDetails />,
+  },
+  {
+    path: `${config.routes.books.index}/:id/edit`,
+    element: (
+      <PrivateRoute>
+        <BookEdit />
+      </PrivateRoute>
+    ),
   },
   {
     path: config.routes.books.addBook,

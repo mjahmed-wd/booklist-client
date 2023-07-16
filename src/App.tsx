@@ -7,6 +7,8 @@ function App() {
     <>
       <Link to={config.routes.books.addBook}>Add book</Link>
       <br />
+      <Link to={config.routes.books.index}>All Books</Link>
+      <br />
       <br />
       <Outlet />
     </>
