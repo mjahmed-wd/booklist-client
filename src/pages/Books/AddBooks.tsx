@@ -1,16 +1,33 @@
-import { useAddBookMutation } from '@/redux/features/book/bookApi';
+import {
+  useAddBookMutation,
+  useEditBookMutation,
+  useGetSingleBookQuery,
+} from '@/redux/features/book/bookApi';
+import { bookGenre } from '@/utils/constant';
 import { Field, Form, Formik, FormikValues } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 type Props = {};
 
-const AddBooks = (props: Props) => {
+const AddEditBooks = (props: Props) => {
   const navigate = useNavigate();
+  const { id = undefined } = useParams<{ id: string }>();
+  const { data } = useGetSingleBookQuery(id);
   const [addBook] = useAddBookMutation();
+  const [editBook] = useEditBookMutation();
 
-  const saveHandler = (values: FormikValues) => {
+  const saveHandler = async (values: FormikValues) => {
     try {
-      addBook(values);
+      if (id) {
+        const options = {
+          id: id!,
+          data: values,
+        };
+
+        await editBook(options).unwrap();
+      } else {
+        await addBook(values);
+      }
       navigate('/');
     } catch (error) {
       console.error(error);
@@ -20,12 +37,14 @@ const AddBooks = (props: Props) => {
   return (
     <div>
       <Formik
-        initialValues={{
-          title: '',
-          author: '',
-          genre: '',
-          publicationDate: '',
-        }}
+        initialValues={
+          data || {
+            title: '',
+            author: '',
+            genre: '',
+            publicationDate: '',
+          }
+        }
         validateOnBlur={true}
         onSubmit={(values) => {
           saveHandler(values);
@@ -34,7 +53,13 @@ const AddBooks = (props: Props) => {
         <Form>
           <Field type="text" name="title" placeholder="Book Title" />
           <Field type="text" name="author" placeholder="Book Author" />
-          <Field type="text" name="genre" placeholder="Genre" />
+          <Field name="genre" as="select">
+            {bookGenre.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </Field>
           <Field
             type="date"
             name="publicationDate"
@@ -47,4 +72,4 @@ const AddBooks = (props: Props) => {
   );
 };
 
-export default AddBooks;
+export default AddEditBooks;

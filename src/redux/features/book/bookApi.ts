@@ -39,7 +39,12 @@ const bookApi = api.injectEndpoints({
       invalidatesTags: ['books'],
     }),
     getAllBooks: builder.query({
-      query: () => config.endPoints.book.index,
+      query: ({ searchTerm, genre, publicationYear }) =>
+        `${config.endPoints.book.index}?${
+          searchTerm ? 'searchTerm=' + searchTerm + '&' : ''
+        }${genre ? 'genre=' + genre + '&' : ''}${
+          publicationYear ? 'publicationYear=' + publicationYear : ''
+        }`,
       transformResponse(baseQueryReturnValue: { data: IBook[] }, _meta, _arg) {
         return baseQueryReturnValue.data;
       },
@@ -59,6 +64,7 @@ export const {
   useAddBookMutation,
   useEditBookMutation,
   useGetAllBooksQuery,
+  useLazyGetAllBooksQuery,
   useDeleteBookMutation,
   useGetSingleBookQuery,
 } = bookApi;

@@ -31,9 +31,14 @@ const BookDetails = (props: Props) => {
         </button>
       </div>
       <h1>{data?.title}</h1>
-      <p>{data?.author}</p>
-      <p>{data?.genre}</p>
-      <p>{data?.publicationDate}</p>
+      <p>Author: {data?.author}</p>
+      <p>Genre: {data?.genre}</p>
+      <p>Publication: {data?.publicationDate}</p>
+      {data?.reviews?.map(review=> <div key={review.comment}>
+        <b>User: {review.user}</b>
+        <small>{review.comment}</small>
+        <hr/>
+      </div>)}
     </div>
   );
 };
