@@ -1,5 +1,6 @@
 import { api } from '@/redux/api/apiSlice';
 import config from '@/config';
+import { IUserState } from '../user/userSlice';
 
 export type IBook = {
   title: string;
@@ -7,7 +8,7 @@ export type IBook = {
   genre: string;
   publicationDate: string;
   reviews: {
-    user: string;
+    user: IUserState;
     comment: string;
   }[];
   id: string;
@@ -38,13 +39,19 @@ const bookApi = api.injectEndpoints({
       }),
       invalidatesTags: ['books'],
     }),
+    addReview: builder.mutation<IBook, { id: string, data: {user: string, comment: string} }>({
+      query: ({ id, data }) => ({
+        url: `${config.endPoints.book.index}/${id}/review`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['books'],
+    }),
     getAllBooks: builder.query({
       query: ({ searchTerm, genre, year }) =>
         `${config.endPoints.book.index}?${
           searchTerm ? 'searchTerm=' + searchTerm + '&' : ''
-        }${genre ? 'genre=' + genre + '&' : ''}${
-          year ? 'year=' + year : ''
-        }`,
+        }${genre ? 'genre=' + genre + '&' : ''}${year ? 'year=' + year : ''}`,
       transformResponse(baseQueryReturnValue: { data: IBook[] }, _meta, _arg) {
         return baseQueryReturnValue.data;
       },
@@ -64,6 +71,7 @@ export const {
   useAddBookMutation,
   useEditBookMutation,
   useGetAllBooksQuery,
+  useAddReviewMutation,
   useLazyGetAllBooksQuery,
   useDeleteBookMutation,
   useGetSingleBookQuery,

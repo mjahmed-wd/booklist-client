@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export interface IUserState {
   email: string;
   id: string;
-  plannedToRead: Array<string>;
+  plannedToRead: { bookId: string; isFinished: boolean }[];
   wishlist: string[];
 }
 

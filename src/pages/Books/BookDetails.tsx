@@ -1,3 +1,4 @@
+import Review from '@/components/Review';
 import config from '@/config';
 import {
   useDeleteBookMutation,
@@ -34,11 +35,14 @@ const BookDetails = (props: Props) => {
       <p>Author: {data?.author}</p>
       <p>Genre: {data?.genre}</p>
       <p>Publication: {data?.publicationDate}</p>
-      {data?.reviews?.map(review=> <div key={review.comment}>
-        <b>User: {review.user}</b>
-        <small>{review.comment}</small>
-        <hr/>
-      </div>)}
+      {data?.reviews?.map((review) => (
+        <div key={review.comment}>
+          <b>User: {review.user.email}</b>
+          <small>{review.comment}</small>
+          <hr />
+        </div>
+      ))}
+      <Review />
     </div>
   );
 };
