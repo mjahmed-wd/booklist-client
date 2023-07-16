@@ -1,7 +1,7 @@
 import { api } from '@/redux/api/apiSlice';
 import config from '@/config';
 
-type IBook = {
+export type IBook = {
   title: string;
   author: string;
   genre: string;
@@ -22,7 +22,13 @@ const bookApi = api.injectEndpoints({
         body,
       }),
     }),
+    getAllBooks: builder.query({
+      query: () => config.endPoints.book.index,
+      transformResponse(baseQueryReturnValue: { data: IBook[] }, meta, arg) {
+        return baseQueryReturnValue.data;
+      },
+    }),
   }),
 });
 
-export const { useAddBookMutation } = bookApi;
+export const { useAddBookMutation, useGetAllBooksQuery } = bookApi;

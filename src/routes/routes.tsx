@@ -3,8 +3,9 @@ import Login from '@/pages/Login';
 import SignUp from '@/pages/SignUp';
 import { createBrowserRouter } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
-import AddBooks from '@/pages/AddBooks';
+import AddBooks from '@/pages/Books/AddBooks';
 import config from '@/config';
+import Books from '@/pages/Books';
 
 const routes = createBrowserRouter([
   {
@@ -14,7 +15,7 @@ const routes = createBrowserRouter([
   },
   {
     path: config.routes.books.index,
-    element: <App />,
+    element: <Books />,
     children: [
       {
         path: config.routes.books.addBook,
