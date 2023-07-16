@@ -6,8 +6,9 @@ interface IProps {
   children: ReactNode;
 }
 
-export default function PrivateRoute({ children }: IProps) {
-  const { user, isLoading } = useAppSelector((state) => state.user);
+const PrivateRoute = ({ children }: IProps) => {
+  const { user } = useAppSelector((state) => state);
+  const { isLoading } = useAppSelector((state) => state.utils);
 
   const { pathname } = useLocation();
 
@@ -20,4 +21,6 @@ export default function PrivateRoute({ children }: IProps) {
   }
 
   return children;
-}
+};
+
+export default PrivateRoute;
