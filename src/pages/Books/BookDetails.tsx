@@ -1,5 +1,8 @@
 import config from '@/config';
-import { useGetSingleBookQuery } from '@/redux/features/book/bookApi';
+import {
+  useDeleteBookMutation,
+  useGetSingleBookQuery,
+} from '@/redux/features/book/bookApi';
 import { useNavigate, useParams } from 'react-router-dom';
 
 type Props = {};
@@ -7,8 +10,11 @@ type Props = {};
 const BookDetails = (props: Props) => {
   const { id } = useParams();
   const { data } = useGetSingleBookQuery(id);
+  const [deleteBook] = useDeleteBookMutation();
 
   const navigate = useNavigate();
+
+  const deleteHandler = () => deleteBook({ id: id! });
 
   return (
     <div>
@@ -20,7 +26,9 @@ const BookDetails = (props: Props) => {
         >
           Edit
         </button>
-        <button type="button">Delete</button>
+        <button type="button" onClick={deleteHandler}>
+          Delete
+        </button>
       </div>
       <h1>{data?.title}</h1>
       <p>{data?.author}</p>
