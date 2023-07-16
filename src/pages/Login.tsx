@@ -1,18 +1,21 @@
 import { useLoginMutation } from '@/redux/features/user/userApi';
-import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { useAppSelector } from '@/redux/hook';
 import { Field, Form, Formik } from 'formik';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {};
 
 const Login = (props: Props) => {
-  const { user } = useAppSelector((state) => state);
-  const navigate = useNavigate()
+  const user = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
   const [loginUser] = useLoginMutation();
 
-  if (user){
-    navigate('/')
-  }
+  useEffect(() => {
+    if (user.email) {
+      navigate('/');
+    }
+  }, [user]);
 
   return (
     <div>

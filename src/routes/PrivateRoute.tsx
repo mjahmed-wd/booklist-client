@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const PrivateRoute = ({ children }: IProps) => {
-  const { user } = useAppSelector((state) => state);
+  const user = useAppSelector((state) => state.user);
   const { isLoading } = useAppSelector((state) => state.utils);
 
   const { pathname } = useLocation();

@@ -6,8 +6,18 @@ const config = {
     auth: {
       signUp: "/auth/signup",
       login: `/auth/login`,
+    },
+    book: {
+      index: '/books'
     }
   },
+  routes: {
+    index: '/',
+    books: {
+      index: '/books',
+      addBook: '/books/addBook'
+    }
+  }
 };
 
 export default config;

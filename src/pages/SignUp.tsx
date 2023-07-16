@@ -1,20 +1,22 @@
 import { useSignUpMutation } from '@/redux/features/user/userApi';
-import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { useAppSelector } from '@/redux/hook';
 import { Field, Form, Formik } from 'formik';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {};
 
 const SignUp = (props: Props) => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate()
   const [signUpUser] = useSignUpMutation();
 
-  const { user } = useAppSelector((state) => state);
+  const user = useAppSelector((state) => state.user);
 
-  if (user) {
-    navigate('/')
-  }
+  useEffect(() => {
+    if (user.email) {
+      navigate('/');
+    }
+  }, [user]);
 
   return (
     <div>
