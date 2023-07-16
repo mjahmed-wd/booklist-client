@@ -24,11 +24,17 @@ const bookApi = api.injectEndpoints({
     }),
     getAllBooks: builder.query({
       query: () => config.endPoints.book.index,
-      transformResponse(baseQueryReturnValue: { data: IBook[] }, meta, arg) {
+      transformResponse(baseQueryReturnValue: { data: IBook[] }, _meta, _arg) {
+        return baseQueryReturnValue.data;
+      },
+    }),
+    getSingleBook: builder.query({
+      query: (id) => `${config.endPoints.book.index}/${id}`,
+      transformResponse(baseQueryReturnValue: { data: IBook }, _meta, _arg) {
         return baseQueryReturnValue.data;
       },
     }),
   }),
 });
 
-export const { useAddBookMutation, useGetAllBooksQuery } = bookApi;
+export const { useAddBookMutation, useGetAllBooksQuery, useGetSingleBookQuery } = bookApi;

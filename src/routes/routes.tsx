@@ -6,6 +6,7 @@ import PrivateRoute from './PrivateRoute';
 import AddBooks from '@/pages/Books/AddBooks';
 import config from '@/config';
 import Books from '@/pages/Books';
+import BookDetails from '@/pages/Books/BookDetails';
 
 const routes = createBrowserRouter([
   {
@@ -16,17 +17,18 @@ const routes = createBrowserRouter([
   {
     path: config.routes.books.index,
     element: <Books />,
-    children: [
-      {
-        path: config.routes.books.addBook,
-        element: (
-          <PrivateRoute>
-            <AddBooks />
-          </PrivateRoute>
-        ),
-        children: [],
-      },
-    ],
+  },
+  {
+    path: `${config.routes.books.index}/:id`,
+    element: <BookDetails />,
+  },
+  {
+    path: config.routes.books.addBook,
+    element: (
+      <PrivateRoute>
+        <AddBooks />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/login',
