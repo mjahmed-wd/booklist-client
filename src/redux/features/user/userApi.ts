@@ -23,7 +23,6 @@ const userApi = api.injectEndpoints({
           console.error('Login error:', error.data.message);
         }
       },
-      // invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
     signUp: builder.mutation<{ data: IUserState }, ILoginData>({
       query: (body) => ({
@@ -41,7 +40,31 @@ const userApi = api.injectEndpoints({
       },
       // invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
+    addToWishlist: builder.mutation<IUserState, { id: string, data: {bookId: string} }>({
+      query: ({ id, data }) => ({
+        url: config.endPoints.user.wishlist(id),
+        method: 'POST',
+        body: data,
+      }),
+      // invalidatesTags: ['books'],
+    }),
+    addToPlanned: builder.mutation<IUserState, { id: string, data: {bookId: string} }>({
+      query: ({ id, data }) => ({
+        url: config.endPoints.user.plannedToRead(id),
+        method: 'POST',
+        body: data,
+      }),
+      // invalidatesTags: ['books'],
+    }),
+    updatePlannedList: builder.mutation<IUserState, { id: string, data: {bookId: string} }>({
+      query: ({ id, data }) => ({
+        url: config.endPoints.user.plannedToRead(id),
+        method: 'PATCH',
+        body: data,
+      }),
+      // invalidatesTags: ['books'],
+    }),
   }),
 });
 
-export const { useLoginMutation, useSignUpMutation } = userApi;
+export const { useLoginMutation, useSignUpMutation, useAddToWishlistMutation, useAddToPlannedMutation, useUpdatePlannedListMutation } = userApi;

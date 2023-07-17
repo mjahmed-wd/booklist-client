@@ -1,23 +1,27 @@
-const BASE_URL = import.meta.env.VITE_API_URL
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const config = {
   baseUrl: BASE_URL as string,
   endPoints: {
     auth: {
-      signUp: "/auth/signup",
+      signUp: '/auth/signup',
       login: `/auth/login`,
     },
     book: {
-      index: '/books'
-    }
+      index: '/books',
+    },
+    user: {
+      wishlist: (id: string) => `/user/${id}/wishlist`,
+      plannedToRead: (id: string) => `/user/${id}/plannedToRead`,
+    },
   },
   routes: {
     index: '/',
     books: {
       index: '/books',
-      addBook: '/books/addBook'
-    }
-  }
+      addBook: '/books/addBook',
+    },
+  },
 };
 
 export default config;

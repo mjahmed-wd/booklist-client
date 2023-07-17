@@ -4,18 +4,24 @@ import {
   useDeleteBookMutation,
   useGetSingleBookQuery,
 } from '@/redux/features/book/bookApi';
+import { useAddToPlannedMutation, useAddToWishlistMutation, useUpdatePlannedListMutation } from '@/redux/features/user/userApi';
+import { useAppSelector } from '@/redux/hook';
 import { useNavigate, useParams } from 'react-router-dom';
 
 type Props = {};
 
 const BookDetails = (props: Props) => {
-  const { id } = useParams();
-  const { data } = useGetSingleBookQuery(id);
+  const { id: bookId } = useParams();
+  const user = useAppSelector(state=> state.user)
+  const { data } = useGetSingleBookQuery(bookId);
   const [deleteBook] = useDeleteBookMutation();
+  const [addToWishlist] = useAddToWishlistMutation()
+  const [addToPlannedList] = useAddToPlannedMutation()
+  const [updatePlannedList] = useUpdatePlannedListMutation()
 
   const navigate = useNavigate();
 
-  const deleteHandler = () => deleteBook({ id: id! });
+  const deleteHandler = () => deleteBook({ id: bookId! });
 
   return (
     <div>
@@ -23,7 +29,23 @@ const BookDetails = (props: Props) => {
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <button
           type="button"
-          onClick={() => navigate(`${config.routes.books.index}/${id}/edit`)}
+          onClick={() => addToWishlist({id: user.id, data: {
+            bookId: bookId! 
+        }})}
+        >
+          Add to Wishlist
+        </button>
+        <button
+          type="button"
+          onClick={() => addToPlannedList({id: user.id, data: {
+            bookId: bookId! 
+        }})}
+        >
+          Add to reading list
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate(`${config.routes.books.index}/${bookId}/edit`)}
         >
           Edit
         </button>
@@ -36,9 +58,9 @@ const BookDetails = (props: Props) => {
       <p>Genre: {data?.genre}</p>
       <p>Publication: {data?.publicationDate}</p>
       {data?.reviews?.map((review) => (
-        <div key={review.comment}>
-          <b>User: {review.user.email}</b>
-          <small>{review.comment}</small>
+        <div key={review?.comment}>
+          <b>User: {review.user?.email}</b>
+          <small>{review?.comment}</small>
           <hr />
         </div>
       ))}
