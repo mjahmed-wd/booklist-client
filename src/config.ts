@@ -11,6 +11,7 @@ const config = {
       index: '/books',
     },
     user: {
+      index: '/user',
       wishlist: (id: string) => `/user/${id}/wishlist`,
       plannedToRead: (id: string) => `/user/${id}/plannedToRead`,
     },

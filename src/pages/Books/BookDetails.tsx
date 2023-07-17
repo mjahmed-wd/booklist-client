@@ -4,7 +4,7 @@ import {
   useDeleteBookMutation,
   useGetSingleBookQuery,
 } from '@/redux/features/book/bookApi';
-import { useAddToPlannedMutation, useAddToWishlistMutation, useUpdatePlannedListMutation } from '@/redux/features/user/userApi';
+import { useAddToPlannedMutation, useAddToWishlistMutation, useGetUserInfoQuery, useUpdatePlannedListMutation } from '@/redux/features/user/userApi';
 import { useAppSelector } from '@/redux/hook';
 import { useNavigate, useParams } from 'react-router-dom';
 

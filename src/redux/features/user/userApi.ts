@@ -7,21 +7,33 @@ type ILoginData = {
   password: string;
 };
 
+const setUserData = async ({dispatch, queryFulfilled}:any)=>{
+  try {
+    const response = await queryFulfilled;
+    dispatch(setUser(response.data.data));
+  } catch (error: any) {
+    console.error('Login error:', error);
+  }
+}
+
 const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
+    getUserInfo: builder.query({
+      query: ({id }) =>
+        `${config.endPoints.user.index}/${id}`,
+      transformResponse(baseQueryReturnValue: { data: IUserState }, _meta, _arg) {
+        return baseQueryReturnValue.data;
+      },
+      providesTags: ['user'],
+    }),
     login: builder.mutation<{ data: IUserState }, ILoginData>({
       query: (body) => ({
         url: config.endPoints.auth.login,
         method: 'POST',
         body,
       }),
-      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
-        try {
-          const response = await queryFulfilled;
-          dispatch(setUser(response.data.data));
-        } catch (error: any) {
-          console.error('Login error:', error.data.message);
-        }
+      async onQueryStarted(_arg, promise) {
+        setUserData(promise)
       },
     }),
     signUp: builder.mutation<{ data: IUserState }, ILoginData>({
@@ -30,13 +42,8 @@ const userApi = api.injectEndpoints({
         method: 'POST',
         body,
       }),
-      async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
-        try {
-          const response = await queryFulfilled;
-          dispatch(setUser(response.data.data));
-        } catch (error: any) {
-          console.error('Signup error:', error.data.message);
-        }
+      async onQueryStarted(_arg, promise) {
+        setUserData(promise)
       },
       // invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
@@ -46,7 +53,10 @@ const userApi = api.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      // invalidatesTags: ['books'],
+      async onQueryStarted(_arg, promise) {
+        setUserData(promise)
+      },
+      invalidatesTags: ['user'],
     }),
     addToPlanned: builder.mutation<IUserState, { id: string, data: {bookId: string} }>({
       query: ({ id, data }) => ({
@@ -54,7 +64,10 @@ const userApi = api.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      // invalidatesTags: ['books'],
+      async onQueryStarted(_arg, promise) {
+        setUserData(promise)
+      },
+      invalidatesTags: ['user'],
     }),
     updatePlannedList: builder.mutation<IUserState, { id: string, data: {bookId: string} }>({
       query: ({ id, data }) => ({
@@ -62,9 +75,12 @@ const userApi = api.injectEndpoints({
         method: 'PATCH',
         body: data,
       }),
-      // invalidatesTags: ['books'],
+      async onQueryStarted(_arg, promise) {
+        setUserData(promise)
+      },
+      invalidatesTags: ['user'],
     }),
   }),
 });
 
-export const { useLoginMutation, useSignUpMutation, useAddToWishlistMutation, useAddToPlannedMutation, useUpdatePlannedListMutation } = userApi;
+export const { useGetUserInfoQuery, useLoginMutation, useSignUpMutation, useAddToWishlistMutation, useAddToPlannedMutation, useUpdatePlannedListMutation } = userApi;
