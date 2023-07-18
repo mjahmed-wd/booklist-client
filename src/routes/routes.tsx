@@ -12,11 +12,12 @@ const routes = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    children: [],
-  },
-  {
-    path: config.routes.books.index,
-    element: <Books />,
+    children: [
+      {
+        path: config.routes.books.index,
+        element: <Books />,
+      },
+    ],
   },
   {
     path: `${config.routes.books.index}/:id`,

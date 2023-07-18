@@ -1,5 +1,6 @@
 import config from '@/config';
-import { useAppSelector } from '@/redux/hook';
+import { setUser, userInitialState } from '@/redux/features/user/userSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -11,7 +12,17 @@ type Props = {};
 
 const CustomNavbar = (props: Props) => {
   const user = useAppSelector((state) => state.user);
-  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate();
+
+  const userAuthActionHandler = async () => {
+    if (user?.email) {
+      dispatch(setUser(userInitialState))
+    } else {
+      navigate(config.routes.auth.login);
+    }
+  };
+  
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
@@ -30,7 +41,11 @@ const CustomNavbar = (props: Props) => {
               className="me-2"
               aria-label="Search"
             />
-            <Button type='button' onClick={()=>navigate(config.routes.auth.login)} variant="outline-success">
+            <Button
+              type="button"
+              onClick={userAuthActionHandler}
+              variant="outline-success"
+            >
               {user?.email ? 'Logout' : 'Login'}
             </Button>
           </Form>

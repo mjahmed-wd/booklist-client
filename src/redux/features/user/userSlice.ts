@@ -8,7 +8,7 @@ export interface IUserState {
   wishlist: string[];
 }
 
-const initialState: IUserState = {
+export const userInitialState: IUserState = {
   email: '',
   id: '',
   plannedToRead: [],
@@ -17,7 +17,7 @@ const initialState: IUserState = {
 
 const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: userInitialState,
   reducers: {
     setUser: (_state, action: PayloadAction<IUserState>) => {
       return action.payload;
