@@ -18,6 +18,10 @@ const config = {
   },
   routes: {
     index: '/',
+    auth: {
+      login: '/login',
+      signup: '/signup',
+    },
     books: {
       index: '/books',
       addBook: '/books/addBook',
