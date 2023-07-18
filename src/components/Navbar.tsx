@@ -35,12 +35,14 @@ const CustomNavbar = (props: Props) => {
             navbarScroll
           ></Nav>
           <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
+            <Button
+              type="button"
+              onClick={()=>navigate(config.routes.books.addBook)}
+              variant="outline-success"
+              className='me-3'
+            >
+              Add Books
+            </Button>
             <Button
               type="button"
               onClick={userAuthActionHandler}

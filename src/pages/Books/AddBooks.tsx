@@ -41,7 +41,7 @@ const AddEditBooks = (props: Props) => {
           data || {
             title: '',
             author: '',
-            genre: '',
+            genre: bookGenre[0],
             publicationDate: '',
           }
         }

@@ -1,7 +1,9 @@
+import BookCard from '@/components/BookCard';
 import config from '@/config';
 import { useGetAllBooksQuery } from '@/redux/features/book/bookApi';
 import { bookGenre } from '@/utils/constant';
 import { useState } from 'react';
+import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 type Props = {};
@@ -19,13 +21,13 @@ const Books = (props: Props) => {
   if (isLoading) return <h2>Loading. .. ...</h2>;
 
   return (
-    <div>
+    <Container>
       <div>
         <input
           type="text"
           name="searchValue"
           id=""
-          placeholder='Search'
+          placeholder="Search"
           value={searchValue}
           onChange={(e) => {
             setSearchValue(e.target.value);
@@ -47,7 +49,7 @@ const Books = (props: Props) => {
           type="text"
           name="searchValue"
           id=""
-          placeholder='Year'
+          placeholder="Year"
           value={selectedYear}
           onChange={(e) => {
             setSelectedYear(e.target.value);
@@ -57,18 +59,12 @@ const Books = (props: Props) => {
           Search
         </button>
       </div>
-      {data?.map((book) => (
-        <div key={book.id}>
-          <Link to={`${config.routes.books.index}/${book.id}`}>
-            Book Name: {book.title}
-          </Link>
-          <p>Author: {book.author}</p>
-          <p>Genre: {book.genre}</p>
-          <p>Publish Date: {book.publicationDate}</p>
-          <br />
-        </div>
-      ))}
-    </div>
+      <div className="row row-cols-1 row-cols-md-4 g-4 card-group">
+        {data?.map((book) => (
+          <BookCard key={book.id} book={book} />
+        ))}
+      </div>
+    </Container>
   );
 };
 
