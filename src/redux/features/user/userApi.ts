@@ -1,6 +1,7 @@
 import { api } from '@/redux/api/apiSlice';
 import { IUserState, setUser } from './userSlice';
 import config from '@/config';
+import { toast } from 'react-toastify';
 
 type ILoginData = {
   email: string;
@@ -11,8 +12,10 @@ const setUserData = async ({dispatch, queryFulfilled}:any)=>{
   try {
     const response = await queryFulfilled;
     dispatch(setUser(response.data.data));
+    toast.success(response.data.message);
   } catch (error: any) {
     console.error('Login error:', error);
+    toast.error(error?.error?.data?.message || 'Network error');
   }
 }
 
@@ -33,7 +36,7 @@ const userApi = api.injectEndpoints({
         body,
       }),
       async onQueryStarted(_arg, promise) {
-        setUserData(promise)
+        await setUserData(promise);
       },
     }),
     signUp: builder.mutation<{ data: IUserState }, ILoginData>({
@@ -43,7 +46,7 @@ const userApi = api.injectEndpoints({
         body,
       }),
       async onQueryStarted(_arg, promise) {
-        setUserData(promise)
+        await setUserData(promise);
       },
       // invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
@@ -54,7 +57,7 @@ const userApi = api.injectEndpoints({
         body: data,
       }),
       async onQueryStarted(_arg, promise) {
-        setUserData(promise)
+          await setUserData(promise);
       },
       invalidatesTags: ['user'],
     }),
@@ -65,7 +68,7 @@ const userApi = api.injectEndpoints({
         body: data,
       }),
       async onQueryStarted(_arg, promise) {
-        setUserData(promise)
+        await setUserData(promise);
       },
       invalidatesTags: ['user'],
     }),
@@ -76,7 +79,7 @@ const userApi = api.injectEndpoints({
         body: data,
       }),
       async onQueryStarted(_arg, promise) {
-        setUserData(promise)
+        await setUserData(promise);
       },
       invalidatesTags: ['user'],
     }),

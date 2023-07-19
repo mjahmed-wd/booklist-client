@@ -21,24 +21,23 @@ const routes = createBrowserRouter([
         path: `${config.routes.books.index}/:id`,
         element: <BookDetails />,
       },
+      {
+        path: `${config.routes.books.index}/:id/edit`,
+        element: (
+          <PrivateRoute>
+            <AddEditBooks />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: config.routes.books.addBook,
+        element: (
+          <PrivateRoute>
+            <AddEditBooks />
+          </PrivateRoute>
+        ),
+      },
     ],
-  },
-  
-  {
-    path: `${config.routes.books.index}/:id/edit`,
-    element: (
-      <PrivateRoute>
-        <AddEditBooks />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: config.routes.books.addBook,
-    element: (
-      <PrivateRoute>
-        <AddEditBooks />
-      </PrivateRoute>
-    ),
   },
   {
     path: '/login',
