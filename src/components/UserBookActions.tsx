@@ -27,38 +27,88 @@ const UserBookActions = (props: Props) => {
 
   const deleteHandler = () => deleteBook({ id: bookId! });
 
+  const isExistingOnPlannedList = () => {
+    const foundBook = user.plannedToRead.find((book) => book.book === bookId);
+    if (foundBook && foundBook.isFinished) {
+      return 'Finished';
+    } else if (foundBook) {
+      return 'Listed';
+    } else {
+      return 'NotListed';
+    }
+  };
+
   return (
     <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-      <Button
-        type="button"
-        variant="outline-success"
-        className="me-3"
-        onClick={() =>
-          addToWishlist({
-            id: user.id,
-            data: {
-              bookId: bookId!,
-            },
-          })
-        }
-      >
-        Add to Wishlist
-      </Button>
-      <Button
-        type="button"
-        variant="outline-success"
-        className="me-3"
-        onClick={() =>
-          addToPlannedList({
-            id: user.id,
-            data: {
-              bookId: bookId!,
-            },
-          })
-        }
-      >
-        Add to reading list
-      </Button>
+      {user.wishlist.includes(bookId!) ? (
+        <Button
+          type="button"
+          variant="outline-success"
+          className="me-3"
+          disabled
+        >
+          Wishlist added
+        </Button>
+      ) : (
+        <Button
+          type="button"
+          variant="outline-success"
+          className="me-3"
+          onClick={() =>
+            addToWishlist({
+              id: user.id,
+              data: {
+                bookId: bookId!,
+              },
+            })
+          }
+        >
+          Add to Wishlist
+        </Button>
+      )}
+      {isExistingOnPlannedList() === 'Listed' ? (
+        <Button
+          type="button"
+          variant="outline-success"
+          className="me-3"
+          onClick={() =>
+            updatePlannedList({
+              id: user.id,
+              data: {
+                bookId: bookId!,
+              },
+            })
+          }
+        >
+          Mark as Read
+        </Button>
+      ) : isExistingOnPlannedList() === 'NotListed' ? (
+        <Button
+          type="button"
+          variant="outline-success"
+          className="me-3"
+          onClick={() =>
+            addToPlannedList({
+              id: user.id,
+              data: {
+                bookId: bookId!,
+              },
+            })
+          }
+        >
+          Add to reading list
+        </Button>
+      ) : (
+        <Button
+          type="button"
+          variant="outline-success"
+          className="me-3"
+          disabled
+        >
+          Already Read
+        </Button>
+      )}
+
       <Button
         type="button"
         variant="outline-success"
