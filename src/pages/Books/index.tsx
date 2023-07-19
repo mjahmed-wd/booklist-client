@@ -3,7 +3,7 @@ import config from '@/config';
 import { useGetAllBooksQuery } from '@/redux/features/book/bookApi';
 import { bookGenre } from '@/utils/constant';
 import { useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 type Props = {};
@@ -22,7 +22,7 @@ const Books = (props: Props) => {
 
   return (
     <Container>
-      <div>
+      <div className='mt-3 mb-3 d-flex justify-content-center align-items-center gap-2'>
         <input
           type="text"
           name="searchValue"
@@ -32,9 +32,11 @@ const Books = (props: Props) => {
           onChange={(e) => {
             setSearchValue(e.target.value);
           }}
+          className="form-control"
         />
         <select
           name="color"
+          className="form-select"
           value={selectedGenre}
           onChange={(e) => setSelectedGenre(e.target.value)}
         >
@@ -54,10 +56,16 @@ const Books = (props: Props) => {
           onChange={(e) => {
             setSelectedYear(e.target.value);
           }}
+          className="form-control"
         />
-        <button type="button" onClick={refetch}>
-          Search
-        </button>
+        <Button
+          type="button"
+          onClick={refetch}
+          variant="outline-success"
+          className="me-3 w-25"
+        >
+          Add Books
+        </Button>
       </div>
       <div className="row row-cols-1 row-cols-md-4 g-4 card-group">
         {data?.map((book) => (
