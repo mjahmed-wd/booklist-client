@@ -7,12 +7,17 @@ import AddEditBooks from '@/pages/Books/AddBooks';
 import config from '@/config';
 import Books from '@/pages/Books';
 import BookDetails from '@/pages/Books/BookDetails';
+import CustomNavbar from '@/components/Navbar';
 
 const routes = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
+      {
+        path: config.routes.index,
+        element: <Books />,
+      },
       {
         path: config.routes.books.index,
         element: <Books />,

@@ -1,10 +1,8 @@
 import BookCard from '@/components/BookCard';
-import config from '@/config';
 import { useGetAllBooksQuery } from '@/redux/features/book/bookApi';
 import { bookGenre } from '@/utils/constant';
 import { useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
 type Props = {};
 
@@ -64,7 +62,7 @@ const Books = (props: Props) => {
           variant="outline-success"
           className="me-3 w-25"
         >
-          Add Books
+          Search
         </Button>
       </div>
       <div className="row row-cols-1 row-cols-md-4 g-4 card-group">
