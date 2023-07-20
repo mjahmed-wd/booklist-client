@@ -8,9 +8,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate } from 'react-router-dom';
 
-type Props = {};
-
-const CustomNavbar = (props: Props) => {
+const CustomNavbar = () => {
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch()
   const navigate = useNavigate();

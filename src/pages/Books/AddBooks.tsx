@@ -3,16 +3,13 @@ import {
   useEditBookMutation,
   useGetSingleBookQuery,
 } from '@/redux/features/book/bookApi';
-import { useAppSelector } from '@/redux/hook';
 import { bookGenre } from '@/utils/constant';
 import { Field, Form, Formik, FormikValues } from 'formik';
 import { Button, Container } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-type Props = {};
-
-const AddEditBooks = (props: Props) => {
+const AddEditBooks = () => {
   const navigate = useNavigate();
   const { id = undefined } = useParams<{ id: string }>();
   const { data } = useGetSingleBookQuery(id);

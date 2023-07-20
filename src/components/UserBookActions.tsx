@@ -1,7 +1,6 @@
 import config from '@/config';
 import {
-  useDeleteBookMutation,
-  useGetSingleBookQuery,
+  useDeleteBookMutation
 } from '@/redux/features/book/bookApi';
 import {
   useAddToPlannedMutation,
@@ -12,12 +11,9 @@ import { useAppSelector } from '@/redux/hook';
 import { Button } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 
-type Props = {};
-
-const UserBookActions = (props: Props) => {
+const UserBookActions = () => {
   const { id: bookId } = useParams();
   const user = useAppSelector((state) => state.user);
-  const { data } = useGetSingleBookQuery(bookId);
   const [deleteBook] = useDeleteBookMutation();
   const [addToWishlist] = useAddToWishlistMutation();
   const [addToPlannedList] = useAddToPlannedMutation();

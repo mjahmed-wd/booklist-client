@@ -1,13 +1,12 @@
 import App from '@/App';
+import config from '@/config';
+import Books from '@/pages/Books';
+import AddEditBooks from '@/pages/Books/AddBooks';
+import BookDetails from '@/pages/Books/BookDetails';
 import Login from '@/pages/Login';
 import SignUp from '@/pages/SignUp';
 import { createBrowserRouter } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
-import AddEditBooks from '@/pages/Books/AddBooks';
-import config from '@/config';
-import Books from '@/pages/Books';
-import BookDetails from '@/pages/Books/BookDetails';
-import CustomNavbar from '@/components/Navbar';
 
 const routes = createBrowserRouter([
   {

@@ -6,9 +6,7 @@ import { useEffect } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
-type Props = {};
-
-const SignUp = (props: Props) => {
+const SignUp = () => {
   const navigate = useNavigate();
   const [signUpUser] = useSignUpMutation();
 

@@ -2,20 +2,14 @@ import AddReview from '@/components/AddReview';
 import Review from '@/components/Review';
 import UserBookActions from '@/components/UserBookActions';
 import {
-  useDeleteBookMutation,
-  useGetSingleBookQuery,
+  useGetSingleBookQuery
 } from '@/redux/features/book/bookApi';
-import { useAppSelector } from '@/redux/hook';
 import { Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
-type Props = {};
-
-const BookDetails = (props: Props) => {
+const BookDetails = () => {
   const { id: bookId } = useParams();
-  const user = useAppSelector((state) => state.user);
   const { data } = useGetSingleBookQuery(bookId);
-  const [deleteBook] = useDeleteBookMutation();
 
   return (
     <Container>

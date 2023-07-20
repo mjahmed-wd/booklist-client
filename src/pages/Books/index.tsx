@@ -4,9 +4,7 @@ import { bookGenre } from '@/utils/constant';
 import { useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 
-type Props = {};
-
-const Books = (props: Props) => {
+const Books = () => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
   const [selectedYear, setSelectedYear] = useState('');

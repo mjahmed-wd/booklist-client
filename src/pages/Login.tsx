@@ -6,9 +6,7 @@ import { useEffect } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
-type Props = {};
-
-const Login = (props: Props) => {
+const Login = () => {
   const user = useAppSelector((state) => state.user);
   const navigate = useNavigate();
   const [loginUser] = useLoginMutation();

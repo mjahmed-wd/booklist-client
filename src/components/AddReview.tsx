@@ -1,14 +1,11 @@
 import { useAddReviewMutation } from '@/redux/features/book/bookApi';
 import { useAppSelector } from '@/redux/hook';
-import { Field, Formik, FormikValues } from 'formik';
+import { Formik } from 'formik';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Form, useNavigate, useParams } from 'react-router-dom';
-// ...import statements
 
-type Props = {};
-
-const AddReview = (props: Props) => {
+const AddReview = () => {
   const user = useAppSelector((state) => state.user);
   const { id = undefined } = useParams<{ id: string }>();
   const [addReview] = useAddReviewMutation();
@@ -41,7 +38,6 @@ const AddReview = (props: Props) => {
           // saveHandler(values);
         }}
       >
-        {({ handleSubmit }) => (
           <Form>
             <div className="form-floating mb-3">
               <textarea
@@ -63,7 +59,6 @@ const AddReview = (props: Props) => {
               Add Review
             </Button>
           </Form>
-        )}
       </Formik>
     </div>
   );
